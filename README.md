@@ -226,6 +226,7 @@ dotnet test
 
 \*\*Lösenord\*\*
 
+
 \- Hashas med PBKDF2 (Password-Based Key Derivation Function 2) och slumpad salt. Lösenordet sparas aldrig.
 
 \- Samma felmeddelande och svarstid vid fel namn eller lösenord, så att det inte avslöjas vilka användare som finns.
@@ -233,6 +234,7 @@ dotnet test
 
 
 \*\*JWT (JSON Web Token)\*\*
+
 
 \- Signeras med HS256 och `Jwt:Key` från User Secrets. Servern accepterar bara HS256.
 
@@ -244,6 +246,7 @@ dotnet test
 
 \*\*Identitet och behörighet\*\*
 
+
 \- Användarens id och namn läses alltid från token, aldrig från klienten.
 
 \- Rum, historik och inbjudningar kontrolleras mot databasen. Bara admin kan bjuda in.
@@ -254,11 +257,12 @@ dotnet test
 
 \*\*End-to-end-kryptering av grupprum\*\*
 
-\- \*\*Enhetsnyckel:\*\* ECDH (Elliptic Curve Diffie-Hellman)-nyckelpar som webbläsaren skapar en gång per användare. Den privata nyckeln är icke-exporterbar och stannar i IndexedDB.
 
-\- \*\*Rumsnyckel:\*\* AES (Advanced Encryption Standard)-256-nyckel som skaparen av rummet slumpar fram. Krypterar meddelandena.
+\- Enhetsnyckel: ECDH (Elliptic Curve Diffie-Hellman)-nyckelpar som webbläsaren skapar en gång per användare. Den privata nyckeln är icke-exporterbar och stannar i IndexedDB.
 
-\- \*\*Inslagen rumsnyckel:\*\* rumsnyckeln krypterad åt en medlem enligt ECIES (Elliptic Curve Integrated Encryption Scheme). Lagras på servern, som inte kan låsa upp den.
+\- Rumsnyckel: AES (Advanced Encryption Standard)-256-nyckel som skaparen av rummet slumpar fram. Krypterar meddelandena.
+
+\- Inslagen rumsnyckel: rumsnyckeln krypterad åt en medlem enligt ECIES (Elliptic Curve Integrated Encryption Scheme). Lagras på servern, som inte kan låsa upp den.
 
 \- Meddelanden krypteras med AES-GCM (Advanced Encryption Standard – Galois/Counter Mode), ny IV (Initialization Vector) per meddelande och rums-id som AAD (Additional Authenticated Data). Servern ser bara ciphertext.
 
@@ -267,6 +271,7 @@ dotnet test
 
 
 \*\*Begränsning av missbruk\*\*
+
 
 \- Inloggning och registrering: max 5 försök per minut och IP (Internet Protocol)-adress.
 
@@ -277,6 +282,7 @@ dotnet test
 
 
 \*\*XSS (Cross-Site Scripting) och loggning\*\*
+
 
 \- All text visas med `textContent`, aldrig `innerHTML`.
 
@@ -290,25 +296,27 @@ dotnet test
 
 \*\*Skyddar:\*\*
 
-\- \*\*Avlyssning på vägen:\*\* ingen på nätverket kan läsa trafiken
 
-\- \*\*Manipulation på vägen:\*\* ändrad trafik upptäcks
+\- Avlyssning på vägen: ingen på nätverket kan läsa trafiken
 
-\- \*\*Serverns identitet:\*\* certifikatet visar att klienten pratar med rätt server (självsignerat bara om det är betrott)
+\- Manipulation på vägen: ändrad trafik upptäcks
 
-\- \*\*Omspelning\*\* inom en anslutning
+\- Serverns identitet: certifikatet visar att klienten pratar med rätt server (självsignerat bara om det är betrott)
+
+\- Omspelning inom en anslutning
 
 
 
 \*\*Skyddar inte:\*\*
 
-\- \*\*Data på servern och i databasen:\*\* servern ser allt som inte är end-to-end-krypterat, t.ex. lobbyn
 
-\- \*\*En komprometterad server eller klient\*\*, t.ex. skadeprogram eller XSS (Cross-Site Scripting)
+\- Data på servern och i databasen: servern ser allt som inte är end-to-end-krypterat, t.ex. lobbyn
 
-\- \*\*Att trafiken stoppas\*\* (tillgänglighet)
+\- En komprometterad server eller klient, t.ex. skadeprogram eller XSS (Cross-Site Scripting)
 
-\- \*\*En inloggad användare som missbrukar sin behörighet\*\* – hanteras av behörighetskontrollerna
+\- Att trafiken stoppas (tillgänglighet)
+
+\- En inloggad användare som missbrukar sin behörighet – hanteras av behörighetskontrollerna
 
 
 
@@ -320,27 +328,27 @@ Därför krypteras grupprummen även i applikationslagret, så att innehållet s
 
 
 
-\- \*\*MITM (Man-in-the-Middle) via servern:\*\* servern förmedlar publika nycklar och skulle kunna byta ut dem. Förbättring: fingeravtryck som användarna jämför.
+\- MITM (Man-in-the-Middle) via servern: servern förmedlar publika nycklar och skulle kunna byta ut dem. Förbättring: fingeravtryck som användarna jämför.
 
-\- \*\*En enhetsnyckel per webbläsare:\*\* en ny webbläsare får en ny enhetsnyckel och kan inte läsa rum som delats med den gamla.
+\- En enhetsnyckel per webbläsare: en ny webbläsare får en ny enhetsnyckel och kan inte läsa rum som delats med den gamla.
 
-\- \*\*Ingen forward secrecy:\*\* den som får tag i en enhet kan läsa rummets historik. Medvetet val, så att chattloggarna går att läsa.
+\- Ingen forward secrecy: den som får tag i en enhet kan läsa rummets historik. Medvetet val, så att chattloggarna går att läsa.
 
-\- \*\*Replay:\*\* omskickade meddelanden upptäcks inte, bara ändrade.
+\- Replay: en elak server kan skicka ett gammalt krypterat meddelande igen, och mottagaren ser det som nytt.
 
-\- \*\*Avsändaren är inte signerad:\*\* en elak server skulle kunna byta avsändare. Förbättring: avsändaren i AAD (Additional Authenticated Data).
+\- Avsändaren är inte signerad: en elak server skulle kunna byta avsändare. Förbättring: avsändaren i AAD (Additional Authenticated Data).
 
-\- \*\*Inslagna rumsnycklar kan bara formatkontrolleras:\*\* en elak admin kan skicka en trasig nyckel till en ny medlem.
+\- Inslagna rumsnycklar kan bara formatkontrolleras: en elak admin kan skicka en trasig nyckel till en ny medlem.
 
-\- \*\*Komprometterad klient:\*\* XSS (Cross-Site Scripting) kan använda nycklarna medan sidan är öppen, och servern levererar JavaScript-koden.
+\- Komprometterad klient: XSS (Cross-Site Scripting) kan använda nycklarna medan sidan är öppen, och servern levererar JavaScript-koden.
 
-\- \*\*SignalR laddas från en CDN (Content Delivery Network) utan SRI (Subresource Integrity).\*\* Förbättring: `integrity`-attribut.
+\- SignalR laddas från en CDN (Content Delivery Network) utan SRI (Subresource Integrity). Förbättring: `integrity`-attribut.
 
-\- \*\*Rate limiting i hubben gäller per anslutning\*\*, inte per användare.
+\- Rate limiting i hubben gäller per anslutning\, inte per användare.
 
-\- \*\*Metadata syns för servern:\*\* vem, vilket rum, när och ungefärlig längd.
+\- Metadata syns för servern: vem, vilket rum, när och ungefärlig längd.
 
-\- \*\*Lobbyn är inte end-to-end-krypterad:\*\* öppen för alla inloggade, skyddas av TLS (Transport Layer Security).
+\- Lobbyn är inte end-to-end-krypterad: öppen för alla inloggade, skyddas av TLS (Transport Layer Security).
 
 
 
