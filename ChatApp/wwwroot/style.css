@@ -1,0 +1,316 @@
+﻿* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui, sans-serif;
+    background: #f0f2f5;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.hidden {
+    display: none !important;
+}
+
+button {
+    background: #4f46e5;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.7rem 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+    button:hover {
+        background: #4338ca;
+    }
+
+    button.secondary {
+        background: transparent;
+        color: #4f46e5;
+        border: 1px solid #4f46e5;
+        padding: 0.4rem 0.8rem;
+    }
+
+input {
+    flex: 1;
+    padding: 0.7rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+    input:focus {
+        outline: 2px solid #4f46e5;
+        border-color: transparent;
+    }
+
+    /* NYTT: avstängda knappar och fält */
+    button:disabled,
+    input:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+/* ===== Inloggning och registrering ===== */
+.card {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+}
+
+    /* ÄNDRAT: gäller bara undertexten direkt efter rubriken */
+    .card h1 + p {
+        color: #6b7280;
+        margin: 0.5rem 0 1.5rem;
+    }
+
+    .card form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+/* Bekräftelser, t.ex. "Kontot är skapat" */
+.success {
+    color: #16a34a;
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+}
+
+    .success:empty {
+        display: none;
+    }
+
+/* Felmeddelanden */
+.error {
+    color: #dc2626;
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+    min-height: 1.2em;
+}
+
+/* Länk mellan inloggning och registrering */
+.switch-page {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+    .switch-page a {
+        color: #4f46e5;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+        .switch-page a:hover {
+            text-decoration: underline;
+        }
+
+/* ===== Chatt: rumslista + chattyta ===== */
+/* ÄNDRAT: bredare och i rader, så att sidopanelen får plats */
+.chat {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 900px;
+    height: 80vh;
+    display: flex;
+    overflow: hidden;
+}
+
+/* ----- Sidopanel (NYTT) ----- */
+.sidebar {
+    width: 230px;
+    background: #f9fafb;
+    border-right: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header {
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.room-sections {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 0.5rem;
+}
+
+.sidebar-title {
+    padding: 1rem 1rem 0.4rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6b7280;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-right: 0.5rem;
+}
+
+/* Liten "+"-knapp */
+.icon-button {
+    background: transparent;
+    color: #4f46e5;
+    padding: 0.1rem 0.5rem;
+    font-size: 1.1rem;
+    line-height: 1.2;
+}
+
+    .icon-button:hover {
+        background: #eef2ff;
+    }
+
+.room-list {
+    list-style: none;
+    padding: 0 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.room {
+    width: 100%;
+    background: transparent;
+    color: #374151;
+    font-weight: 500;
+    padding: 0.45rem 0.75rem;
+    text-align: left;
+}
+
+    .room:hover {
+        background: #eef2ff;
+    }
+
+    .room.active,
+    .room.active:hover {
+        background: #4f46e5;
+        color: #fff;
+    }
+
+.sidebar-footer {
+    padding: 1rem;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: #6b7280;
+    font-size: 0.9rem;
+    word-break: break-all;
+}
+
+/* ----- Chattyta (NYTT, ersätter .chat header och .user-info) ----- */
+.chat-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+    .chat-main header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+.room-subtitle {
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+#messages {
+    flex: 1;
+    overflow-y: auto;
+    list-style: none;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.msg {
+    max-width: 75%;
+    padding: 0.5rem 0.8rem;
+    border-radius: 12px;
+    background: #f3f4f6;
+    align-self: flex-start;
+    overflow-wrap: anywhere; /* NYTT: långa ord bryts i stället för att trycka ut layouten */
+}
+
+    .msg.own {
+        background: #4f46e5;
+        color: #fff;
+        align-self: flex-end;
+    }
+
+    .msg .name {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 600;
+        opacity: 0.7;
+        margin-bottom: 0.15rem;
+    }
+
+    .msg.system {
+        align-self: center;
+        background: transparent;
+        color: #6b7280;
+        font-size: 0.85rem;
+        font-style: italic;
+    }
+
+    /* NYTT: felmeddelanden i chatten */
+    .msg.error {
+        align-self: center;
+        background: #fef2f2;
+        color: #dc2626;
+        font-size: 0.85rem;
+    }
+
+#message-form {
+    display: flex;
+    gap: 0.5rem;
+    padding: 1rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+/* ===== Mobil (NYTT) ===== */
+@media (max-width: 640px) {
+    .chat {
+        flex-direction: column;
+        height: 92vh;
+    }
+
+    .sidebar {
+        width: 100%;
+        max-height: 40vh;
+        border-right: none;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .sidebar-footer {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+}

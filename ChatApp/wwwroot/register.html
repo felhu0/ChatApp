@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Skapa konto – ChatApp</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Registreringsvy -->
+    <section class="card">
+        <h1>Skapa konto</h1>
+        <p>Välj ett användarnamn och ett lösenord</p>
+
+        <form id="register-form">
+            <input id="reg-username" placeholder="Användarnamn" maxlength="30"
+                   autocomplete="username" required>
+            <input id="reg-password" type="password" placeholder="Lösenord (minst 8 tecken)"
+                   minlength="8" maxlength="128" autocomplete="new-password" required>
+            <input id="reg-confirm" type="password" placeholder="Upprepa lösenord"
+                   minlength="8" maxlength="128" autocomplete="new-password" required>
+            <button type="submit">Skapa konto</button>
+        </form>
+
+        <!-- Felmeddelanden visas här -->
+        <p id="register-error" class="error" role="alert"></p>
+
+        <p class="switch-page">Har du redan ett konto? <a href="index.html">Logga in</a></p>
+    </section>
+
+    <script src="register.js"></script>
+</body>
+</html>

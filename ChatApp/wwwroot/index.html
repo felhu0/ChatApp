@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ChatApp</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Inloggningsvy -->
+    <section id="login-view" class="card">
+        <h1>ChatApp</h1>
+        <p>Logga in för att börja chatta</p>
+
+        <!-- Visas när man kommer direkt från registreringen -->
+        <p id="login-info" class="success"></p>
+
+        <form id="login-form">
+            <input id="username" placeholder="Användarnamn" maxlength="30"
+                   autocomplete="username" required>
+            <input id="password" type="password" placeholder="Lösenord" maxlength="128"
+                   autocomplete="current-password" required>
+            <button type="submit">Logga in</button>
+        </form>
+
+        <!-- Felmeddelanden från servern visas här -->
+        <p id="login-error" class="error" role="alert"></p>
+
+        <p class="switch-page">Har du inget konto? <a href="register.html">Skapa konto</a></p>
+    </section>
+
+    <!-- Chattvy -->
+    <section id="chat-view" class="chat hidden">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>ChatApp</h2>
+            </div>
+
+            <nav class="room-sections">
+                <h3 class="sidebar-title">Lobby</h3>
+                <ul id="public-rooms" class="room-list"></ul>
+
+                <div class="section-header">
+                    <h3 class="sidebar-title">Grupprum</h3>
+                    <button id="new-group" class="icon-button" title="Nytt grupprum" aria-label="Nytt grupprum">+</button>
+                </div>
+                <ul id="group-rooms" class="room-list"></ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <span id="current-user"></span>
+                <button id="logout" class="secondary">Logga ut</button>
+            </div>
+        </aside>
+
+        <div class="chat-main">
+            <header>
+                <div>
+                    <h2 id="room-title"></h2>
+                    <p id="room-subtitle" class="room-subtitle"></p>
+                </div>
+                <!-- Visas bara för admin i grupprum -->
+                <button id="invite-button" class="secondary hidden">Bjud in</button>
+            </header>
+            <ul id="messages"></ul>
+            <form id="message-form">
+                <input id="message" placeholder="Skriv ett meddelande..." maxlength="500" autocomplete="off" required>
+                <button type="submit">Skicka</button>
+            </form>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.7/signalr.min.js"></script>
+    <script src="crypto.js"></script>
+    <script src="chat.js"></script>
+</body>
+</html>
